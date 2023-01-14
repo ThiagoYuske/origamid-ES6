@@ -1,6 +1,9 @@
 # ES6
 Javascript 6
 
+link: https://www.origamid.com/slide/javascript-completo-es6/#/0101-javascript-completo-es6/1
+
+
 ## String
 
 ### STR.CHARAT(N)
@@ -41,7 +44,7 @@ Aumenta o tamanho da string para o valor de n. Ou seja, uma string com 8 caracte
 	listaPrecos[0].padEnd(10, '.');   // R$ 99.....
 
 
-###STR.REPLACE(REGEXP|SUBSTR, NEWSTR|FUNCTION)
+### STR.REPLACE(REGEXP|SUBSTR, NEWSTR|FUNCTION)
 Troca parte da string por outra. Podemos utilizar uma regular expression ou um valor direto. Se usarmos um valor direto ele irá trocar apenas o primeiro valor que encontrar.
 
 	let listaItens = 'Camisas Bonés Calças Bermudas Vestidos Saias';
@@ -49,6 +52,8 @@ Troca parte da string por outra. Podemos utilizar uma regular expression ou um v
 
 	let preco = 'R$ 1200,43';
 	preco = preco.replace(',', '.'); // 'R$ 1200.43'
+
+
 
 ## Number
 
@@ -109,6 +114,8 @@ Verifica se o valor passado é uma array e retorna um valor booleano.
 
 	const cloneLinguagens = linguagens.slice(); // serve para criar uma copia para uma nova variavel sem referencia.
 
+
+
 ## Arrays
 
 ### [].FOREACH()
@@ -157,3 +164,291 @@ Verifica se o valor passado é uma array e retorna um valor booleano.
 
 	const total2 = aulas.reduce((acc, cur) => acc + cur, 100);
 	total2; // 165
+
+### [].REDUCERIGHT()
+Existe também o método [].reduceRight(), a diferença é que este começa a iterar da direita para a esquerda, enquanto o reduce itera da esquerda para a direita.
+
+	const frutas = ['Banana', 'Pêra', 'Uva'];
+
+	const frutasRight = frutas.reduceRight((acc, fruta) => acc + ' ' + fruta);
+	const frutasLeft = frutas.reduce((acc, fruta) => acc + ' ' + fruta);
+
+	frutasRight; // Uva Pêra Banana
+	frutasLeft; // Banana Pêra Uva
+
+### [].SOME()
+[].some(), se pelo menos um return da iteração for truthy, ele retorna true.
+
+	const frutas = ['Banana', 'Pêra', 'Uva'];
+	const temUva = frutas.some((fruta) => {
+	  return fruta === 'Uva';
+	}); // true
+
+
+### [].EVERY()
+[].every(), se todos os returns das iterações forem truthy, o método irá retornar true. Se pelo menos um for falsy, ele irá retornar false.
+
+	const frutas = ['Banana', 'Pêra', 'Uva', ''];
+	// False pois pelo menos uma fruta
+	// está vazia '', o que é um valor falsy
+	const arraysCheias = frutas.every((fruta) => {
+	  return fruta; // false
+	});
+
+
+### [].FIND() E [].FINDINDEX()
+[].find(), retorna o valor atual da primeira iteração que retornar um valor truthy. Já o [].findIndex(), ao invés de retornar o valor, retorna o index deste valor na array.
+
+	const frutas = ['Banana', 'Pêra', 'Uva', 'Maçã'];
+	const buscaUva = frutas.findIndex((fruta) => {
+	  return fruta === 'Uva'; 
+	}); // 2
+
+	const numeros = [6, 43, 22, 88, 101, 29];
+	const buscaMaior45 = numeros.find(x => x > 45); // 88
+
+
+### [].FILTER()
+[].filter(), retorna uma array com a lista de valores que durante a sua iteração retornaram um valor truthy.
+
+	const frutas = ['Banana', undefined, null, '', 'Uva', 0, 'Maçã'];
+	const arrayLimpa = frutas.filter((fruta) => {
+	  return fruta; 
+	}); // ['Banana', 'Uva', 'Maçã']
+
+	const numeros = [6, 43, 22, 88, 101, 29];
+	const buscaMaior45 = numeros.filter(x => x > 45); // [88, 101]
+
+
+
+## Function
+
+### FUNCTION.CALL()
+function.call(this, arg1, arg2, ...) executa a função, sendo possível passarmos uma nova referência ao this da mesma.
+
+	const carros = ['Ford', 'Fiat', 'VW'];
+
+	carros.forEach((item) => {
+	  console.log(item);
+	}); // Log de cada Carro
+
+	carros.forEach.call(carros, (item) => {
+	  console.log(item);
+	}); // Log de cada Carro
+
+	const frutas = ['Banana', 'Pêra', 'Uva'];
+
+	carros.forEach.call(frutas, (item) => {
+	  console.log(item);
+	}); // Log de cada Fruta
+
+### ARRAY'S E CALL
+É comum utilizarmos o call() nas funções do protótipo do construtor Array. Assim podemos estender todos os métodos de Array à objetos que se parecem com uma Array (array-like).
+
+	Array.prototype.mostreThis = function() {
+	  console.log(this);
+	}
+
+	const frutas = ['Uva', 'Maçã', 'Banana'];
+	frutas.mostreThis(); // ['Uva', 'Maçã', 'Banana']
+
+	Array.prototype.pop.call(frutas); // Remove Banana
+	frutas.pop(); // Mesma coisa que a função acima
+
+### ARRAY-LIKE
+HTMLCollection, NodeList e demais objetos do Dom, são parecidos com uma array. Por isso conseguimos utilizar os mesmos na substituição do this em call.
+
+	const li = document.querySelectorAll('li');
+
+	const filtro = Array.prototype.filter.call(li, function(item) {
+	  return item.classList.contains('ativo');
+	});
+
+	filtro; // Retorna os itens que possuem ativo
+
+
+### UNCTION.APPLY()
+O apply(this, [arg1, arg2, ...]) funciona como o call, a única diferença é que os argumentos da função são passados através de uma array.
+#################### A DIFERENÇA É QUE RECEBE UMA LISTA E O CALL NAO ##################
+
+	const numeros = [3,4,6,1,34,44,32];
+	Math.max.apply(null, numeros);
+	Math.max.call(null, 3, 4, 5, 6, 7, 20);
+
+	// Podemos passar null para o valor
+	// de this, caso a função não utilize
+	// o objeto principal para funcionar
+
+### FUNCTION.BIND()
+Diferente de call e apply, bind(this, arg1, arg2, ...) não irá executar a função mas sim retornar a mesma com o novo contexto de this. Permitindo assim, criar funcoes pre prontas mas sem todos os argumentos.
+
+	const li = document.querySelectorAll('li');
+
+	const filtrarLi = Array.prototype.filter.bind(li, function(item) {
+	  return item.classList.contains('ativo');
+	});
+
+	filtrarLi();
+	#############################################################################
+	function imc(altura, peso) {
+	  return peso / (altura * altura);
+	}
+
+	const imc180 = imc.bind(null, 1.80);
+
+	imc(1.80, 70); // 21.6
+	imc180(70); // 21.6
+
+
+
+## Object
+
+### Object.create()
+Object.create(obj, defineProperties) retorna um novo objeto que terá como protótipo o objeto do primeiro argumento.
+
+	const carro = {
+	  rodas: 4,
+	  init(marca) {
+	    this.marca = marca;
+	    return this;
+	  },
+	  acelerar() {
+	    return `${this.marca} acelerou as ${this.rodas} rodas`;
+	  },
+	  buzinar() {
+	    return this.marca + ' buzinou';
+	  }
+	}
+
+	const honda = Object.create(carro);
+	honda.init('Honda').acelerar();
+
+### OBJECT.ASSIGN()
+Object.assign(alvo, obj1, obj2) adiciona ao alvo as propriedades e métodos enumeráveis dos demais objetos. O assign irá modificar o objeto alvo.
+
+	const funcaoAutomovel = {
+	  acelerar() {
+	    return 'acelerou';
+	  },
+	  buzinar() {
+	    return 'buzinou';
+	  },
+	}
+
+	const moto = {
+	  rodas: 2,
+	  capacete: true,
+	}
+
+	const carro = {
+	  rodas: 4,
+	  mala: true,
+	}
+
+	Object.assign(moto, funcaoAutomovel);
+	Object.assign(carro, funcaoAutomovel);
+
+
+### OBJECT.DEFINEPROPERTIES()
+Object.defineProperties(alvo, propriedades) adiciona ao alvo novas propriedades. A diferença aqui é a possibilidade de serem definidas as características dessas propriedades.
+
+	const moto = {}
+	Object.defineProperties(moto, {
+	  rodas: {
+	    value: 2,
+	    configurable: false, // impede deletar e mudança de valor
+	    enumarable: true, // torna enumerável
+	  },
+	  capacete: {
+	    value: true,
+	    configurable: true,
+	    writable: false, // impede mudança de valor
+	  },
+	})
+
+	moto.rodas = 4;
+	delete moto.capacete;
+	moto;
+	// {rodas: 2}
+
+### GET E SET
+É possível definirmos diferentes comportamentos para get e set de uma propriedade. Lembrando que ao acionarmos uma propriedade obj.propriedade, a função get é ativada e ao setarmos ob.propriedade = 'Valor' a função de set é ativada.
+
+	const moto = {}
+	Object.defineProperties(moto, {
+	  velocidade: {
+	    get() {
+	      return this._velocidade;
+	    },
+	    set(valor) {
+	      this._velocidade = 'Velocidade ' + valor;
+	    }
+	  },
+	})
+
+	moto.velocidade = 200;
+	moto.velocidade;
+	// Velocidade 200
+
+### OBJECT.GETOWNPROPERTYNAMES(OBJ)
+Retorna uma array com todas as propriedades diretas do objeto (não retorna as do protótipo).
+
+	Object.getOwnPropertyNames(Array);
+	// ['length', 'name', 'prototype', 'isArray', 'from', 'of']
+
+	Object.getOwnPropertyNames(Array.prototype);
+	// [..., 'filter', 'map', 'every', 'some', 'reduce', ...]
+
+	const carro = {
+	  marca: 'Ford',
+	  ano: 2018,
+	}
+	Object.getOwnPropertyNames(carro);
+	// ['marca', 'ano']
+
+### OBJECT.GETPROTOTYPEOF() E OBJECT.IS()
+Object.getPrototypeOf(), retorna o protótipo do objeto. Object.is(obj1, obj2) verifica se os objetos são iguais e retorna true ou false.
+
+	const frutas = ['Banana', 'Pêra']
+	Object.getPrototypeOf(frutas);
+	Object.getPrototypeOf(''); // String
+
+	const frutas1 = ['Banana', 'Pêra'];
+	const frutas2 = ['Banana', 'Pêra'];
+
+	Object.is(frutas1, frutas2); // false
+
+### OBJECT.FREEZE(), OBJECT.SEAL(), OBJECT.PREVENTEXTENSIONS()
+Object.freeze() impede qualquer mudança nas propriedades. Object.seal() previne a adição de novas propriedades e impede que as atuais sejam deletadas. Object.preventExtensions() previne a adição de novas propriedades.
+
+	const carro = {
+	  marca: 'Ford',
+	  ano: 2018,
+	}
+	Object.freeze(carro);
+	Object.seal(carro);
+	Object.preventExtensions(carro);
+
+	Object.isFrozen(carro); // true
+	Object.isSealed(carro); // true
+	Object.isExtensible(carro); // true
+
+### {}.HASOWNPROPERTY('PROP') E {}.PROPERTYISENUMERABLE('PROP')
+Verifica se possui a propriedade e retorna true. A propriedade deve ser direta do objeto e não do protótipo. O {}.propertyIsEnumerable() verifica se a propriedade é enumerável.
+	
+	const frutas = ['Banana', 'Uva'];
+
+	frutas.hasOwnProperty('map'); // false
+	Array.hasOwnProperty('map'); // false
+	Array.prototype.hasOwnProperty('map'); // true
+
+	Array.prototype.propertyIsEnumerable('map'); // false
+	window.propertyIsEnumerable('innerHeight'); // true
+
+
+### {}.ISPROTOTYPEOF(VALOR)
+Verifica se é o protótipo do valor passado.
+	
+	const frutas = ['Banana', 'Uva'];
+	
+	Array.prototype.isPrototypeOf(frutas); // true
