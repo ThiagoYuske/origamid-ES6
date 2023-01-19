@@ -1,12 +1,19 @@
 # ES6
 Javascript 6
 
-link: https://www.origamid.com/slide/javascript-completo-es6/#/0101-javascript-completo-es6/1
+https://www.origamid.com/slide/javascript-completo-es6/#/0101-javascript-completo-es6/1
 
+<br/>
+<br/>
 
-## String
+# Getting Started
+<br/>
 
-### STR.CHARAT(N)
+> String
+
+<br/>
+
+## STR.CHARAT(N)
 Retorna o caracter de acordo com o index de (n).
 
 	const linguagem = 'JavaScript';
@@ -14,16 +21,18 @@ Retorna o caracter de acordo com o index de (n).
 	linguagem.charAt(2); // v
 	linguagem.charAt(linguagem.length - 1); // t
 
+<br/>
 
-### STR.CONCAT(STR2, STR3, ...)
+## STR.CONCAT(STR2, STR3, ...)
 Concatena as strings e retorna o resultado.
 
 	const frase = 'A melhor linguagem é ';
 	const linguagem = 'JavaScript';
 	const fraseCompleta = frase.concat(linguagem, '!!');
 
+<br/>
 
-### STR.INCLUDES(SEARCH, POSITION)
+## STR.INCLUDES(SEARCH, POSITION)
 Procura pela string exata dentro de outra string. A procura é case sensitive.
 
 	const fruta = 'Banana';
@@ -31,7 +40,9 @@ Procura pela string exata dentro de outra string. A procura é case sensitive.
 	listaFrutas.includes(fruta); // true
 	fruta.includes(listaFrutas); // false
 
-### STR.PADSTART(N, STR) E STR.PADEND(N, STR)
+<br/>
+
+## STR.PADSTART(N, STR) E STR.PADEND(N, STR)
 Aumenta o tamanho da string para o valor de n. Ou seja, uma string com 8 caracteres, se passarmos n = 10, ela passará a ter 10 caracteres. O preenchimento é feito com espaços, caso não seja declarado o segundo argumento.
 
 	const listaPrecos = ['R$ 99', 'R$ 199', 'R$ 12000'];
@@ -43,8 +54,9 @@ Aumenta o tamanho da string para o valor de n. Ou seja, uma string com 8 caracte
 	listaPrecos[0].padStart(10, '.'); // .....R$ 99
 	listaPrecos[0].padEnd(10, '.');   // R$ 99.....
 
+<br/>
 
-### STR.REPLACE(REGEXP|SUBSTR, NEWSTR|FUNCTION)
+## STR.REPLACE(REGEXP|SUBSTR, NEWSTR|FUNCTION)
 Troca parte da string por outra. Podemos utilizar uma regular expression ou um valor direto. Se usarmos um valor direto ele irá trocar apenas o primeiro valor que encontrar.
 
 	let listaItens = 'Camisas Bonés Calças Bermudas Vestidos Saias';
@@ -53,11 +65,14 @@ Troca parte da string por outra. Podemos utilizar uma regular expression ou um v
 	let preco = 'R$ 1200,43';
 	preco = preco.replace(',', '.'); // 'R$ 1200.43'
 
+<br/>
+<br/>
 
+> Number
 
-## Number
+<br/>
 
-### N.TOLOCALESTRING(LANG, OPTIONS);
+## N.TOLOCALESTRING(LANG, OPTIONS);
 Formata o número de acordo com a língua e opções passadas.
 
 	const preco = 59.49;
@@ -71,9 +86,14 @@ Formata o número de acordo com a língua e opções passadas.
 		Math.floor(4.8334); // 4
 		Math.floor(4.3); // 4
 
-## Array
+<br/>
+<br/>
 
-### ARRAY.FROM()
+> Array
+
+<br/>
+
+## ARRAY.FROM()
 Array.from() é um método utilizado para transformar array-like objects (NodeList), em uma array.
 
 	let li = document.querySelectorAll('li'); // NodeList
@@ -87,17 +107,28 @@ Array.from() é um método utilizado para transformar array-like objects (NodeLi
 
 	const carrosArray = Array.from(carros);
 
-### ARRAY.ISARRAY()
+## ARRAY.ISARRAY()
 Verifica se o valor passado é uma array e retorna um valor booleano.
 
-### [].UNSHIFT() E [].PUSH()
+	let li = document.querySelectorAll('li'); // NodeList
+	Array.isArray(li); // false
+
+	li = Array.from(li); // Array
+	Array.isArray(li); // true
+
+
+<br/>
+
+## [].UNSHIFT() E [].PUSH()
 [].unshift() adiciona elementos ao início da array e retorna o length da mesma. [].push() adiciona elementos ao final da array e retorna o length da mesma.
 
 	const carros = ['Ford', 'Fiat', 'VW'];
 	carros.unshift('Honda', 'Kia'); // 5
 	carros.push('Ferrari'); // 6
 
-### [].SHIFT() E [].POP()
+<br/>
+
+## [].SHIFT() E [].POP()
 [].shift() remove o primeiro elemento da array e retorna o mesmo. [].pop() remove o último elemento da array e retorna o mesmo.
 
 	const carros = ['Ford', 'Fiat', 'VW', 'Honda'];
@@ -105,7 +136,9 @@ Verifica se o valor passado é uma array e retorna um valor booleano.
 
 	const ultimoCarro = carros.pop(); // 'Honda'
 
-### [].SLICE()
+<br/>
+
+## [].SLICE()
 [].slice(inicio, final) retorna os itens da array começando pelo início e indo até o valor de final.
 
 	const linguagens = ['html', 'css', 'js', 'php', 'python'];
@@ -114,11 +147,11 @@ Verifica se o valor passado é uma array e retorna um valor booleano.
 
 	const cloneLinguagens = linguagens.slice(); // serve para criar uma copia para uma nova variavel sem referencia.
 
+<br/>
+<br/>
 
 
-## Arrays
-
-### [].FOREACH()
+## [].FOREACH()
 [].forEach(callback(itemAtual, index, array))
 
 	const carros = ['Ford', 'Fiat', 'Honda'];
@@ -131,7 +164,9 @@ Verifica se o valor passado é uma array e retorna um valor booleano.
 	  console.log(item.toUpperCase());
 	});
 
-### Arrow Function
+<br/>
+
+## Arrow Function
 
 	const li = document.querySelectorAll('li');
 
@@ -139,9 +174,11 @@ Verifica se o valor passado é uma array e retorna um valor booleano.
 
 	li.forEach(function(item) {
 	  item.classList.add('ativa');
-});
+	});
 
-### [].MAP()
+<br/>
+
+## [].MAP()
 [].map(callback(itemAtual, index, array)) = funciona da mesma forma que o forEach(), porém ao invés de retornar undefined, retorna uma nova array com valores atualizados de acordo com o return de cada iteração.
 
 	const carros = ['Ford', 'Fiat', 'Honda'];
@@ -152,8 +189,9 @@ Verifica se o valor passado é uma array e retorna um valor booleano.
 	carros; // ['Ford', 'Fiat', 'Honda']
 	newCarros; // ['Carro Ford', 'Carro Fiat', 'Carro Honda']; 
 
+<br/>
 
-### [].REDUCE()
+## [].REDUCE()
 [].reduce(callback(acumulador, valorAtual, index, array), valorInicial) executa a função de callback para cada item da Array. Um valor especial existe nessa função de callback, ele é chamado de acumulador, mas é na verdade apenas o retorno da iteração anterior.
 
 	const aulas = [10, 25, 30];
@@ -165,7 +203,9 @@ Verifica se o valor passado é uma array e retorna um valor booleano.
 	const total2 = aulas.reduce((acc, cur) => acc + cur, 100);
 	total2; // 165
 
-### [].REDUCERIGHT()
+<br/>
+
+## [].REDUCERIGHT()
 Existe também o método [].reduceRight(), a diferença é que este começa a iterar da direita para a esquerda, enquanto o reduce itera da esquerda para a direita.
 
 	const frutas = ['Banana', 'Pêra', 'Uva'];
@@ -176,7 +216,9 @@ Existe também o método [].reduceRight(), a diferença é que este começa a it
 	frutasRight; // Uva Pêra Banana
 	frutasLeft; // Banana Pêra Uva
 
-### [].SOME()
+<br/>
+
+## [].SOME()
 [].some(), se pelo menos um return da iteração for truthy, ele retorna true.
 
 	const frutas = ['Banana', 'Pêra', 'Uva'];
@@ -184,8 +226,9 @@ Existe também o método [].reduceRight(), a diferença é que este começa a it
 	  return fruta === 'Uva';
 	}); // true
 
+<br/>
 
-### [].EVERY()
+## [].EVERY()
 [].every(), se todos os returns das iterações forem truthy, o método irá retornar true. Se pelo menos um for falsy, ele irá retornar false.
 
 	const frutas = ['Banana', 'Pêra', 'Uva', ''];
@@ -195,8 +238,9 @@ Existe também o método [].reduceRight(), a diferença é que este começa a it
 	  return fruta; // false
 	});
 
+<br/>
 
-### [].FIND() E [].FINDINDEX()
+## [].FIND() E [].FINDINDEX()
 [].find(), retorna o valor atual da primeira iteração que retornar um valor truthy. Já o [].findIndex(), ao invés de retornar o valor, retorna o index deste valor na array.
 
 	const frutas = ['Banana', 'Pêra', 'Uva', 'Maçã'];
@@ -207,8 +251,9 @@ Existe também o método [].reduceRight(), a diferença é que este começa a it
 	const numeros = [6, 43, 22, 88, 101, 29];
 	const buscaMaior45 = numeros.find(x => x > 45); // 88
 
+<br/>
 
-### [].FILTER()
+## [].FILTER()
 [].filter(), retorna uma array com a lista de valores que durante a sua iteração retornaram um valor truthy.
 
 	const frutas = ['Banana', undefined, null, '', 'Uva', 0, 'Maçã'];
@@ -219,11 +264,14 @@ Existe também o método [].reduceRight(), a diferença é que este começa a it
 	const numeros = [6, 43, 22, 88, 101, 29];
 	const buscaMaior45 = numeros.filter(x => x > 45); // [88, 101]
 
+<br/>
+<br/>
 
+> Function
 
-## Function
+<br/>
 
-### FUNCTION.CALL()
+## FUNCTION.CALL()
 function.call(this, arg1, arg2, ...) executa a função, sendo possível passarmos uma nova referência ao this da mesma.
 
 	const carros = ['Ford', 'Fiat', 'VW'];
@@ -242,7 +290,9 @@ function.call(this, arg1, arg2, ...) executa a função, sendo possível passarm
 	  console.log(item);
 	}); // Log de cada Fruta
 
-### ARRAY'S E CALL
+<br/>
+
+## ARRAY'S E CALL
 É comum utilizarmos o call() nas funções do protótipo do construtor Array. Assim podemos estender todos os métodos de Array à objetos que se parecem com uma Array (array-like).
 
 	Array.prototype.mostreThis = function() {
@@ -255,7 +305,9 @@ function.call(this, arg1, arg2, ...) executa a função, sendo possível passarm
 	Array.prototype.pop.call(frutas); // Remove Banana
 	frutas.pop(); // Mesma coisa que a função acima
 
-### ARRAY-LIKE
+<br/>
+
+## ARRAY-LIKE
 HTMLCollection, NodeList e demais objetos do Dom, são parecidos com uma array. Por isso conseguimos utilizar os mesmos na substituição do this em call.
 
 	const li = document.querySelectorAll('li');
@@ -266,8 +318,9 @@ HTMLCollection, NodeList e demais objetos do Dom, são parecidos com uma array. 
 
 	filtro; // Retorna os itens que possuem ativo
 
+<br/>
 
-### UNCTION.APPLY()
+## UNCTION.APPLY()
 O apply(this, [arg1, arg2, ...]) funciona como o call, a única diferença é que os argumentos da função são passados através de uma array.
 #################### A DIFERENÇA É QUE RECEBE UMA LISTA E O CALL NAO ##################
 
@@ -279,7 +332,9 @@ O apply(this, [arg1, arg2, ...]) funciona como o call, a única diferença é qu
 	// de this, caso a função não utilize
 	// o objeto principal para funcionar
 
-### FUNCTION.BIND()
+<br/>
+
+## FUNCTION.BIND()
 Diferente de call e apply, bind(this, arg1, arg2, ...) não irá executar a função mas sim retornar a mesma com o novo contexto de this. Permitindo assim, criar funcoes pre prontas mas sem todos os argumentos.
 
 	const li = document.querySelectorAll('li');
@@ -299,11 +354,15 @@ Diferente de call e apply, bind(this, arg1, arg2, ...) não irá executar a fun�
 	imc(1.80, 70); // 21.6
 	imc180(70); // 21.6
 
+<br/>
+<br/>
 
+> Object
 
-## Object
+<br/>
 
-### Object.create()
+## Object.CREATE()
+
 Object.create(obj, defineProperties) retorna um novo objeto que terá como protótipo o objeto do primeiro argumento.
 
 	const carro = {
@@ -323,7 +382,9 @@ Object.create(obj, defineProperties) retorna um novo objeto que terá como prot�
 	const honda = Object.create(carro);
 	honda.init('Honda').acelerar();
 
-### OBJECT.ASSIGN()
+<br/>
+
+## OBJECT.ASSIGN()
 Object.assign(alvo, obj1, obj2) adiciona ao alvo as propriedades e métodos enumeráveis dos demais objetos. O assign irá modificar o objeto alvo.
 
 	const funcaoAutomovel = {
@@ -348,8 +409,9 @@ Object.assign(alvo, obj1, obj2) adiciona ao alvo as propriedades e métodos enum
 	Object.assign(moto, funcaoAutomovel);
 	Object.assign(carro, funcaoAutomovel);
 
+<br/>
 
-### OBJECT.DEFINEPROPERTIES()
+## OBJECT.DEFINEPROPERTIES()
 Object.defineProperties(alvo, propriedades) adiciona ao alvo novas propriedades. A diferença aqui é a possibilidade de serem definidas as características dessas propriedades.
 
 	const moto = {}
@@ -371,7 +433,9 @@ Object.defineProperties(alvo, propriedades) adiciona ao alvo novas propriedades.
 	moto;
 	// {rodas: 2}
 
-### GET E SET
+<br/>
+
+## GET E SET
 É possível definirmos diferentes comportamentos para get e set de uma propriedade. Lembrando que ao acionarmos uma propriedade obj.propriedade, a função get é ativada e ao setarmos ob.propriedade = 'Valor' a função de set é ativada.
 
 	const moto = {}
@@ -390,7 +454,9 @@ Object.defineProperties(alvo, propriedades) adiciona ao alvo novas propriedades.
 	moto.velocidade;
 	// Velocidade 200
 
-### OBJECT.GETOWNPROPERTYNAMES(OBJ)
+<br/>
+
+## OBJECT.GETOWNPROPERTYNAMES(OBJ)
 Retorna uma array com todas as propriedades diretas do objeto (não retorna as do protótipo).
 
 	Object.getOwnPropertyNames(Array);
@@ -406,7 +472,9 @@ Retorna uma array com todas as propriedades diretas do objeto (não retorna as d
 	Object.getOwnPropertyNames(carro);
 	// ['marca', 'ano']
 
-### OBJECT.GETPROTOTYPEOF() E OBJECT.IS()
+<br/>
+
+## OBJECT.GETPROTOTYPEOF() E OBJECT.IS()
 Object.getPrototypeOf(), retorna o protótipo do objeto. Object.is(obj1, obj2) verifica se os objetos são iguais e retorna true ou false.
 
 	const frutas = ['Banana', 'Pêra']
@@ -418,7 +486,9 @@ Object.getPrototypeOf(), retorna o protótipo do objeto. Object.is(obj1, obj2) v
 
 	Object.is(frutas1, frutas2); // false
 
-### OBJECT.FREEZE(), OBJECT.SEAL(), OBJECT.PREVENTEXTENSIONS()
+<br/>
+
+## OBJECT.FREEZE(), OBJECT.SEAL(), OBJECT.PREVENTEXTENSIONS()
 Object.freeze() impede qualquer mudança nas propriedades. Object.seal() previne a adição de novas propriedades e impede que as atuais sejam deletadas. Object.preventExtensions() previne a adição de novas propriedades.
 
 	const carro = {
@@ -433,7 +503,9 @@ Object.freeze() impede qualquer mudança nas propriedades. Object.seal() previne
 	Object.isSealed(carro); // true
 	Object.isExtensible(carro); // true
 
-### {}.HASOWNPROPERTY('PROP') E {}.PROPERTYISENUMERABLE('PROP')
+<br/>
+
+## {}.HASOWNPROPERTY('PROP') E {}.PROPERTYISENUMERABLE('PROP')
 Verifica se possui a propriedade e retorna true. A propriedade deve ser direta do objeto e não do protótipo. O {}.propertyIsEnumerable() verifica se a propriedade é enumerável.
 	
 	const frutas = ['Banana', 'Uva'];
@@ -445,8 +517,9 @@ Verifica se possui a propriedade e retorna true. A propriedade deve ser direta d
 	Array.prototype.propertyIsEnumerable('map'); // false
 	window.propertyIsEnumerable('innerHeight'); // true
 
+<br/>
 
-### {}.ISPROTOTYPEOF(VALOR)
+## {}.ISPROTOTYPEOF(VALOR)
 Verifica se é o protótipo do valor passado.
 	
 	const frutas = ['Banana', 'Uva'];
