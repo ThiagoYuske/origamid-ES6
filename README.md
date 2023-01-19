@@ -1,10 +1,65 @@
 # ES6
+
 Javascript 6
 
 https://www.origamid.com/slide/javascript-completo-es6/#/0101-javascript-completo-es6/1
 
 <br/>
 <br/>
+
+## HTML Tags
+	dl - definition list
+	dt - definition tag
+	dd - definition description
+	<dl>
+		<dt>Firefox</dt>
+		<dd>A free, open source, cross-platform, graphical web browser developed by the Mozilla Corporation and hundreds of volunteers.</dd>
+
+		<!-- other terms and definitions -->
+	</dl>
+
+
+## HTML Collection x Node Collection
+
+### HTML
+	document.getElementById()
+	document.getElementByName()
+	document.getElementByClassName()
+	document.getElementByTagName()
+
+### Node
+	document.querySelector()
+	document.querySelectorAll()
+
+	Os dois retornam Array-like porém no Node ele possui as funções e nao HTML precisa converter para Array:
+		Array.from(<array-like>)
+
+### JS:
+	Foreach:
+		<element>.forEach(function(<value>, <index>, <array>){
+			console.log(item);
+		})
+
+	Arrow Function:
+		<element>.forEach((item) => {
+			console.log(item);
+		})
+
+	Window size
+		const small = window.matchMedia('(max-width: 600px)');
+
+	if(small.matches) {
+		console.log('Tela menor que 600px')
+	} else {
+		console.log('Tela maior que 600px')
+	}
+
+	toggle = adicionar a classe quando tiver e o contrario remover.
+
+
+
+	Object.getOwnPropertyNames() = Mostra as funções do objeto
+
 
 # Getting Started
 <br/>
