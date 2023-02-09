@@ -1,6 +1,6 @@
 export default function initAnimacaoScroll(){
   
-  const sections = document.querySelectorAll('.js-scroll');
+  const sections = document.querySelectorAll('[data-anime="scroll"]');
 
   if(sections.length) {
     
@@ -13,8 +13,9 @@ export default function initAnimacaoScroll(){
 
         if(isSectionVisible)
           section.classList.add('ativo');
-        else
-          section.classList.remove('ativo');
+        else if (section.classList.contains('ativo')){
+          section.classList.remove('ativo'); 
+        }
       })
     }
     
