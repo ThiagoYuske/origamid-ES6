@@ -929,3 +929,355 @@ Ao invés de selecionarmos elemento por elemento, podemos utilizar um objeto par
 ```
 
 <br/>
+
+## LocalStorage
+
+Além de existir a sessão para armazenamento de dados, existe o local para realizar a mesma função com a diferença de que os dados são excluidos somente se o usuário realizar a limpeza dos dados no navegador.
+
+```js
+	localStorage.nome = 'Thiago'
+	localStorage[nome]
+	localStorage.set('key', 'value')
+	localStorage.get('key')
+```
+
+<br/>
+<br/>
+
+> ASync
+
+<br/>
+
+## PROMISE()
+Promise é uma função construtora de promessas. Existem dois resultados possíveis de uma promessa, ela pode ser resolvida, com a execução do primeiro argumento, ou rejeitada se o segundo argumento for ativado.
+
+```js
+const promessa = new Promise(function(resolve, reject) {
+  let condicao = true;
+  if(condicao) {
+    resolve();
+  } else {
+    reject();
+  }
+});
+
+console.log(promessa); // Promise {<resolved>: undefined}
+```
+
+<br/>
+
+## RESOLVE()
+Podemos passar um argumento na função resolve(), este será enviado junto com a resolução da Promise.
+
+```js
+const promessa = new Promise(function(resolve, reject) {
+  let condicao = true;
+  if(condicao) {
+    resolve('Estou pronto!');
+  } else {
+    reject();
+  }
+});
+
+console.log(promessa); // Promise {<resolved>: "Estou pronto!"}
+
+```
+
+<br/>
+
+## REJECT()
+Quando a condição de resolução da promise não é atingida, ativamos a função reject para rejeitar a mesma. Podemos indicar no console um erro, informando que a promise foi rejeitada.
+
+```js
+const promessa = new Promise(function(resolve, reject) {
+  let condicao = false;
+  if(condicao) {
+    resolve('Estou pronto!');
+  } else {
+    reject(Error('Um erro ocorreu.'));
+  }
+});
+
+console.log(promessa); // Promise {<rejected>: Error:...}
+```
+
+<br/>
+
+## THEN()
+O poder das Promises está no método then() do seu protótipo. O Callback deste método só será ativado quando a promise for resolvida. O argumento do callback será o valor passado na função resolve.
+
+```js
+const promessa = new Promise(function(resolve, reject) {
+  let condicao = true;
+  if(condicao) {
+    resolve('Estou pronto!');
+  } else {
+    reject(Error('Um erro ocorreu.'));
+  }
+});
+
+promessa.then(function(resolucao) {
+  console.log(resolucao); // 'Estou pronto!'
+});
+```
+
+<br/>
+
+## ASSÍNCRONO
+As promises não fazem sentido quando o código executado dentro da mesma é apenas código síncrono. O poder está na execução de código assíncrono que executará o resolve() ao final dele.
+
+```js
+const promessa = new Promise((resolve, reject) => {
+  setTimeout(() => {
+    resolve('Resolvida');
+  }, 1000);
+});
+
+promessa.then(resolucao => {
+  console.log(resolucao); // 'Resolvida' após 1s
+});
+```
+
+<br/>
+
+## CATCH()
+O método catch(), do protótipo de Promises, adiciona um callback a promise que será ativado caso a mesma seja rejeitada.
+
+```js
+const promessa = new Promise((resolve, reject) => {
+  let condicao = false;
+  if(condicao) {
+    resolve('Estou pronto!');
+  } else {
+    reject(Error('Um erro ocorreu.'));
+  }
+});
+
+promessa.then(resolucao => {
+  console.log(resolucao);
+}).catch(reject => {
+  console.log(reject);
+});
+```
+
+<br/>
+
+## THEN(RESOLVE, REJECT)
+Podemos passar a função que será ativada caso a promise seja rejeitada, direto no método then, como segundo argumento.
+
+```js
+const promessa = new Promise((resolve, reject) => {
+  let condicao = false;
+  if(condicao) {
+    resolve('Estou pronto!');
+  } else {
+    reject(Error('Um erro ocorreu.'));
+  }
+});
+
+promessa.then(resolucao => {
+  console.log(resolucao);
+}, reject => {
+  console.log(reject);
+});
+```
+
+<br/>
+
+## FINALLY()
+finally() executará a função anônima assim que a promessa acabar. A diferença do finally é que ele será executado independente do resultado, se for resolvida ou rejeitada.
+
+```js
+const promessa = new Promise((resolve, reject) => {
+  let condicao = false;
+  if(condicao) {
+    resolve('Estou pronto!');
+  } else {
+    reject(Error('Um erro ocorreu.'));
+  }
+});
+
+promessa.then(resolucao => {
+  console.log(resolucao);
+}, reject => {
+  console.log(reject);
+}).finally(() => {
+  console.log('Acabou'); // 'Acabou'
+});
+```
+
+<br/>
+
+## PROMISE.ALL()
+Retornará uma nova promise assim que todas as promises dentro dela forem resolvidas ou pelo menos uma rejeitada. A reposta é uma array com as respostas de cada promise.
+
+```js
+const login = new Promise(resolve => {
+  setTimeout(() => {
+    resolve('Login Efetuado');
+  }, 1000);
+});
+const dados = new Promise(resolve => {
+  setTimeout(() => {
+    resolve('Dados Carregados');
+  }, 1500);
+});
+
+const tudoCarregado = Promise.all([login, dados]);
+
+tudoCarregado.then(respostas => {
+  console.log(respostas); // Array com ambas respostas
+});
+```
+
+<br/>
+
+## PROMISE.RACE()
+Retornará uma nova promise assim que a primeira promise for resolvida ou rejeitada. Essa nova promise terá a resposta da primeira resolvida.
+
+```js
+const login = new Promise(resolve => {
+  setTimeout(() => {
+    resolve('Login Efetuado');
+  }, 1000);
+});
+const dados = new Promise(resolve => {
+  setTimeout(() => {
+    resolve('Dados Carregados');
+  }, 1500);
+});
+
+const carregouPrimeiro = Promise.race([login, dados]);
+
+carregouPrimeiro.then(resposta => {
+  console.log(resposta); // Login Efetuado
+});
+```
+
+<br/>
+
+## FETCH API
+Permite fazermos requisições HTTP através do método fetch(). Este método retorna a resolução de uma Promise. Podemos então utilizar o then para interagirmos com a resposta, que é um objeto do tipo Response.
+
+```js
+fetch('./arquivo.txt').then(function(response) {
+  console.log(response); // Response HTTP (Objeto)
+});
+```
+
+<br/>
+
+## RESPONSE
+O objeto Response, possui um corpo com o conteúdo da resposta. Esse corpo pode ser transformado utilizando métodos do protótipo do objeto Response. Estes retornam outras promises.
+
+```js
+fetch('./arquivo.txt').then(function(response) {
+  return response.text();
+}).then(function(corpo) {
+  console.log(corpo);
+});
+```
+
+<br/>
+
+## .JSON()
+Um tipo de formato de dados muito utilizado com JavaScript é o JSON (JavaScript Object Notation), pelo fato dele possuir basicamente a mesma sintaxe que a de um objeto js. .json() transforma um corpo em json em um objeto JavaScript.
+
+```js
+fetch('https://viacep.com.br/ws/01001000/json/')
+.then(response => response.json())
+.then(cep => {
+  console.log(cep.bairro, cep.logradouro);
+});
+```
+
+<br/>
+
+## .TEXT()
+Podemos utilizar o .text() para diferentes formatos como txt, json, html, css, js e mais.
+
+```js
+const styleElement = document.createElement('style');
+
+fetch('./style.css')
+.then(response => response.text())
+.then(style => {
+  styleElement.innerHTML = style;
+  document.body.appendChild(styleElement);
+});
+```
+
+<br/>
+
+## .BLOB()
+Um blob é um tipo de objeto utilizado para representação de dados de um arquivo. O blob pode ser utilizado para transformarmos requisições de imagens por exemplo. O blob gera um URL único.
+
+```js
+const div = document.createElement('div');
+
+fetch('./imagem.png')
+.then(response => response.blob())
+.then(imgBlob => {
+  const blobUrl = URL.createObjectURL(imgBlob);
+  console.log(blobUrl);
+});
+```
+
+<br/>
+
+## .CLONE()
+Ao utilizarmos os métodos acima, text, json e blob, a resposta é modificada. Por isso existe o método clone, caso você necessite transformar uma resposta em diferentes valores.
+
+```js
+const div = document.createElement('div');
+
+fetch('https://viacep.com.br/ws/01001000/json/')
+.then(response => {
+  const cloneResponse = response.clone();
+  response.json().then(json => {
+    console.log(json)
+  });
+  cloneResponse.text().then(text => {
+    console.log(text)
+  });
+});
+```
+
+<br/>
+
+## .STATUS E .OK
+Retorna o status da requisição. Se foi 404, 200, 202 e mais. ok retorna um valor booleano sendo true para uma requisição de sucesso e false para uma sem sucesso.
+
+```js
+const div = document.createElement('div');
+
+fetch('https://viacep.com.br/ws/01001000/json/')
+.then(response => {
+  console.log(response.status, response.ok);
+  if(response.status === 404) {
+    console.log('Página não encontrada')
+  }
+});
+```
+
+<br/>
+
+## .URL E .TYPE
+.url retorna o url da requisição. .type retorna o tipo da reposta.
+
+```js
+const div = document.createElement('div');
+
+fetch('https://viacep.com.br/ws/01001000/json/')
+.then(response => {
+  console.log(response.type, response.url);
+});
+
+//types
+// basic: feito na mesma origem
+// cors: feito em url body pode estar disponível
+// error: erro de conexão
+// opaque: no-cors, não permite acesso de outros sites
+```
+
+<br/>
