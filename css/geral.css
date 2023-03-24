@@ -288,3 +288,10 @@ body, h1, h2, ul, li, p, dd, dt, dl {
     background: #3f4;
   }
   
+  .btc-preco {
+    background: #3f4;
+    padding: .2rem .5rem;
+    font-weight: bold;
+    border-radius: 2px;
+
+  }

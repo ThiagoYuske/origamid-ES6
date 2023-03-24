@@ -1281,3 +1281,133 @@ fetch('https://viacep.com.br/ws/01001000/json/')
 ```
 
 <br/>
+
+## JSON.PARSE() E JSON.STRINGIFY()
+JSON.parse() irá transformar um texto JSON em um objeto JavaScript. JSON.stringify() irá transformar um objeto JavaScript em uma string no formato JSON.
+
+```js
+const textoJSON = '{"id": 1, "titulo": "JavaScript", "tempo": "25min"}';
+const textoOBJ = JSON.parse(textoJSON);
+
+const enderecoOBJ = {
+  cidade: 'Rio de Janeiro',
+  rua: 'Ali Perto',
+  pais: 'Brasil',
+  numero: 50,
+};
+const enderecoJSON = JSON.stringify(enderecoOBJ);
+
+```
+
+<br/>
+
+## API
+	Application
+
+	Um servidor, aplicativo, objeto JavaScript ou qualquer outra coisa que você interaja através de comandos. Ao digitar uma URL, estamos utilizando a API do browser para se comunicar com a API do servidor.
+
+	Programming
+
+	Programação, isso significa que um comando irá encadear uma cadeia de eventos pré-definidos. O resultado esperado é geralmente o mesmo.
+
+	Interface
+
+	A interface são os comandos criados para permitir a interação com a aplicação. Ex: 'VIOLAO'.toLowerCase() é um método que faz parte da interface do objeto String. A interação com a interface retorna um efeito / resposta.]
+
+<br/>
+
+## URL E METHOD
+Uma requisição HTTP é feita através de uma URL. O método padrão é o GET, mas existem outros como POST, UPDATE, DELETE, HEADER.
+
+```js
+const url = 'https://jsonplaceholder.typicode.com/posts/';
+const options = {
+  method: 'POST',
+  headers: {
+    "Content-Type": "application/json; charset=utf-8",
+  },
+  body: '"aula": "JavaScript"',
+}
+
+fetch(url, options);
+.then(response => response.json())
+.then(json => {
+  console.log(json);
+});
+```
+<br/>
+
+## ASYNC / AWAIT
+A palavra chave async indica que a função possui partes assíncronas e que você pretende esperar a resolução da mesma antes de continuar. O await irá indicar a promise que devemos esperar. Faz parte do ES8.
+
+O resultado da expressão à frente de await tem que ser uma promise. E o retorno do await será sempre o resultado desta promise.
+
+```js
+async function puxarDados() {
+  const dadosResponse = await fetch('./dados.json');
+  const dadosJSON = await dadosResponse.json();
+  
+  document.body.innerText = dadosJSON.titulo;
+}
+
+puxarDados();
+
+```
+
+<br/>
+
+## TRY / CATCH
+Para lidarmos com erros nas promises, podemos utilizar o try e o catch na função.
+
+```js
+async function puxarDados() {
+  try {
+    const dadosResponse = await fetch('./dados.json');
+    const dadosJSON = await dadosResponse.json();
+    document.body.innerText = dadosJSON.titulo;
+  }
+  catch(erro) {
+    console.log(erro);
+  }
+}
+puxarDados();
+
+```
+
+<br/>
+
+## HISTORY
+É possível acessarmos o histórico de acesso do browser em uma sessão específica através do window.history. O objeto history possui diferentes métodos e propriedades.
+
+```js
+window.history;
+window.history.back(); // vai para a anterior
+window.history.forward(); // vai para a próxima
+```
+
+<br/>
+
+## PUSHSTATE()
+A parte interessante de manipularmos o history é que podemos modificar o histórico e adicionar um novo item. window.history.pushState(obj, title, url).
+
+```js
+// Em obj podemos enviar um objeto com dados
+// mas o seu uso é restrito por isso geralmente utilizamos
+// null. O title ainda é ignorado por alguns browsers, também
+// utilizamos null nele. O url que é parte importante.
+
+window.history.pushState(null, null, 'sobre.html');
+```
+
+<br/>
+
+## POPSTATE
+O evento popstate pode ser adicionado ao objeto window. Assim podemos executar uma função toda vez que o usuário clicar no botão de voltar ou próximo.
+
+```js
+window.addEventListener('popstate', () => {
+  fetchPage(window.location.pathname);
+});
+```
+
+<br/>
