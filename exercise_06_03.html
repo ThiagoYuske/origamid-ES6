@@ -29,6 +29,10 @@
         <h2> Preço BTC </h2>
         <p class="btc"></p>
     </div>
+    <div>
+        <p class="piada"></p>
+        <button class="proxima">Proxima</button>
+    </div>
 
     <script>
         // Utilizando a API https://viacep.com.br/ws/${CEP}/json/
@@ -71,6 +75,19 @@
 
         // Utilizando a API https://api.chucknorris.io/jokes/random
         // retorne uma piada randomica do chucknorris, toda vez que clicar em próxima
+
+        const btnProxima = document.querySelector('.proxima');
+        const paragrafoPiada = document.querySelector('.piada');
+
+        function puxarPiada(){
+            fetch('https://api.chucknorris.io/jokes/random')
+            .then(r => r.json())
+            .then((piada) =>  {
+                paragrafoPiada.innerText = piada.value;
+            })
+        }
+
+        btnProxima.addEventListener('click', puxarPiada);
 
     </script>
 </body>
