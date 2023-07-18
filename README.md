@@ -1411,3 +1411,708 @@ window.addEventListener('popstate', () => {
 ```
 
 <br/>
+<br/>
+
+> Mais Javascript
+
+<br/>
+
+## Factory Function
+São funções que retornam um objeto sem a necessidade de utilizarmos a palavra chave new. Possuem basicamente a mesma função que constructor functions / classes.
+
+```js
+	function createButton(text) {
+		function element() {
+			const buttonElement = document.createElement('button');
+			buttonElement.innerText = text;
+			return buttonElement;
+		}
+		return {
+			element: element,
+			text: text,
+		}
+		}
+
+	const comprarBtn = createButton('Comprar');
+
+```
+
+<br/>
+
+## Ice Factory
+
+Podemos impedir que os métodos e propriedades sejam modificados com Object.freeze(). Ideia inicial de Douglas Crockford.
+
+```js
+	'use strict';
+
+	function criarPessoa(nome, sobrenome) {
+	const nomeCompleto = `${nome} ${sobrenome}`;
+	function andar() {
+		return `${nomeCompleto} andou`;
+	}
+	return Object.freeze({
+		nome,
+		sobrenome,
+		andar,
+	});
+	}
+
+	const designer = criarPessoa('André', 'Rafael');
+
+```
+
+<br/>
+
+## Constructor Function / Factory Function
+
+Uma das vantagens da Factory Function é a possibilidade de iniciarmos a mesma sem a utilização da palavra chave new. Também é possível fazer isso com uma Constructor Function.
+
+```js
+	function Pessoa(nome) {
+	if (!(this instanceof Pessoa)) // ou (!new.target)
+		return new Pessoa(nome);
+	this.nome = nome;
+	}
+
+	Pessoa.prototype.andar = function() {
+	return `${this.nome} andou`;
+	}
+
+	const designer = Pessoa('André');
+```
+
+<br/>
+
+## Closures
+
+A funcao2 possui 4 escopos. O primeiro escopo é o Local, com acesso ao item3. O segundo escopo dá acesso ao item2, esse escopo é chamado de Clojure (funcao1) (escopo de função dentro de função). O terceiro escopo é o Script com acesso ao item1 e o quarto escopo é o Global/Window.
+
+```js
+	let item1 = 1;
+	function funcao1() {
+	let item2 = 2;
+	function funcao2() {
+		let item3 = 3;
+		console.log(item1);
+		console.log(item2);
+		console.log(item3);
+	}
+	funcao2();
+	}
+```
+
+Outro exemplo de caso real:
+
+```js
+	function contagem() {
+		let total = 0;
+		return function incrementar() {
+			total++;
+			console.log(total);
+		}
+	}
+
+	const ativarIncrementar = contagem();
+	ativarIncrementar(); // 1
+	ativarIncrementar(); // 2
+	ativarIncrementar(); // 3
+
+```
+
+<br/>
+
+## Debugging
+
+É possível "debugarmos" um código JavaScript utilizando ferramentas do browser ou através do próprio Visual Studio Code. Se o código possuir qualquer Web API, o processo deve ser feito no Browser. Plugins podem interferir no debug dentro do browser.
+
+```js
+	debugger; // adicione a palavra debugger
+	let item1 = 1;
+	function funcao1() {
+	let item2 = 2;
+	function funcao2() {
+		let item3 = 3;
+		console.log(item1);
+		console.log(item2);
+		console.log(item3);
+	}
+	funcao2();
+	}
+
+```
+
+<br/>
+
+## Destructuring
+
+Permite a desestruturação de Arrays e Objetos. Atribuindo suas propriedades à novas variáveis.
+
+```js
+	const cliente = {
+	nome: 'Andre',
+	compras: {
+		digitais: {
+		livros: ['Livro 1', 'Livro 2'],
+		videos: ['Video JS', 'Video HTML']
+		},
+		fisicas: {
+		cadernos: ['Caderno 1']
+		}
+	}
+	}
+
+	console.log(cliente.compras.digitais.livros);
+	console.log(cliente.compras.digitais.videos);
+
+	const {livros, videos} = cliente.compras.digitais;
+
+	console.log(livros);
+	console.log(videos);
+```
+
+Outros exemplos:
+
+```js
+	const cliente = {
+		nome: 'Andre',
+		compras: 10,
+	}
+
+	const {nome, compras} = cliente;
+	// ou
+	const {nome: nomeCliente, compras: comprasCliente} = cliente;
+
+```
+
+```js
+	const frutas = ['Banana', 'Uva', 'Morango'];
+
+	const primeiraFruta = frutas[0];
+	const segundaFruta = frutas[1];
+	const terceiraFruta = frutas[2];
+
+	// Com destructuring
+	const [primeira, segunda, terceira] = frutas;
+```
+
+```js
+	const primeiro = 'Item 1';
+	const segundo = 'Item 2';
+	const terceiro = 'Item 3';
+	// ou
+	const [primeiro, segundo, terceiro] = ['Item 1', 'Item 2', 'Item 3']; 
+```
+
+<br/>
+
+## Nesting
+
+É possível aninhar uma desestruturação dentro de outra.
+
+```js
+	const cliente = {
+		nome: 'Andre',
+		compras: {
+			digitais: {
+			livros: ['Livro 1', 'Livro 2'],
+			videos: ['Video JS', 'Video HTML']
+			},
+			fisicas: {
+			cadernos: ['Caderno 1']
+			}
+		}
+	}
+
+	const {fisicas, digitais, digitais: {livros, videos}} = cliente.compras;
+
+	console.log(fisicas);
+	console.log(livros);
+	console.log(videos);
+	console.log(digitais);
+```
+
+<br/>
+
+## Parâmetro Padrão (Default) ES6+
+
+Com o ES6 é possível definirmos o valor de um parâmetro direto na declaração do mesmo, caso o argumento não seja passado no momento da execução.
+
+```js
+	function perimetroForma(lado, totalLados = 4) {
+		return lado * totalLados;
+	}
+
+	perimetroForma(10, 5); // 50
+	perimetroForma(10); // 40
+
+```
+
+<br/>
+
+## Arguments
+
+A palavra chave arguments é um objeto Array-like criado dentro da função. Esse objeto contém os valores dos argumentos.
+
+```js
+	function perimetroForma(lado, totalLados = 4) {
+	console.log(arguments)
+	return lado * totalLados;
+	}
+
+	perimetroForma(10);
+	perimetroForma(10, 4, 20);
+```
+
+<br/>
+
+## Parâmetro Rest
+
+É possível declararmos uma parâmetro utilizando ... na frente do mesmo. Assim todos os argumentos que passarmos na ativação da função, ficarão dentro do parâmetro.
+
+```js
+	function anunciarGanhadores(...ganhadores) {
+		ganhadores.forEach(ganhador => {
+			console.log(ganhador + ' ganhou.')
+		});
+	}
+
+	anunciarGanhadores('Pedro', 'Marta', 'Maria');
+```
+
+<br/>
+
+## Único Rest
+
+Só é possível ter um único parâmetro rest e ele deve ser o último.
+
+```js
+	function anunciarGanhadores(premio, ...ganhadores) {
+		ganhadores.forEach(ganhador => {
+			console.log(ganhador + ' ganhou um ' + premio)
+		});
+	}
+
+	anunciarGanhadores('Carro', 'Pedro', 'Marta', 'Maria');
+```
+
+<br/>
+
+## Rest vs Arguments
+
+Apesar de parecidos o parâmetro rest e a palavra arguments possuem grandes diferenças. Sendo rest uma array real e arguments um objeto Array-like.
+
+```js
+	function anunciarGanhadores(premio, ...ganhadores) {
+	console.log(ganhadores);
+	console.log(arguments);
+	}
+
+	anunciarGanhadores('Carro', 'Pedro', 'Marta', 'Maria');
+```
+
+<br/>
+
+## Operador Spread
+
+Assim como o rest, o operador Spread também utiliza os ... para ser ativado. O spread irá distribuir um item iterável, um por um.
+
+```js
+	const frutas = ['Banana', 'Uva', 'Morango'];
+	const legumes = ['Cenoura', 'Batata'];
+
+	const comidas = [...frutas, 'Pizza', ...legumes];
+```
+
+<br/>
+
+## Spread Argument
+
+O Spread pode ser muito útil para funções que recebem uma lista de argumentos ao invés de uma array.
+
+```js
+	const numeroMaximo = Math.max(4,5,20,10,30,2,33,5); // 33
+
+	const listaNumeros = [1,13,21,12,55,2,3,43];
+	const numeroMaximoSpread = Math.max(...listaNumeros);
+```
+
+<br/>
+
+## Transformar em Array
+
+É possível transformar itens iteráveis em uma array real com o spread.
+
+```js
+	const btns = document.querySelectorAll('button');
+	const btnsArray = [...btns];
+
+	const frase = 'Isso é JavaScript';
+	const fraseArray = [...frase];
+```
+
+<br/>
+
+## Spread e for...of
+
+Com o for loop podemos manipular cada um dos elementos do objeto iterável. * O for...of não irá funcionar em um objeto comum que não seja iterável.
+
+```js
+	const buttons = document.querySelectorAll('button');
+
+	for(const btn of buttons) {
+	btn.style.background = 'blue';
+	}
+
+	console.log(...buttons);
+```
+
+<br/>
+
+## for...in
+
+Este loop irá retornar a chave (key) de todas as propriedades enumeráveis (que não sejam símbolos) de um objeto.
+
+```js
+	const carro = {
+	marca: 'Honda',
+	ano: 2018,
+	}
+
+	for(const propriedade in carro) {
+	console.log(propriedade);
+	}
+```
+
+<br/>
+
+## Arrays e for...in
+
+Uma Array é um objeto, porém a chave de cada valor é igual ao seu index.
+
+```js
+	const frutas = ['Banana', 'Morango', 'Uva'];
+
+	for(const index in frutas) {
+		console.log(index);
+	}
+
+	for(const index in frutas) {
+		console.log(frutas[index]);
+	}
+```
+
+<br/>
+
+## Chave e Valor
+
+Utilizando o for...in podemos retornar todas as chaves e valores de propriedades enumeráveis.
+
+```js
+	const btn = document.querySelector('button');
+	const btnStyles = getComputedStyle(btn);
+
+	for(const style in btnStyles) {
+		console.log(`${style}: ${btnStyles[style]}`);
+	}
+```
+
+
+<br/>
+<br/>
+
+> Regular Expression
+
+<br/>
+
+## Regexr
+
+https://regexr.com/
+
+## Regular Expression
+
+Regexp ou Regex são expressões utilizadas para realizarmos buscas / substituições de padrões em strings. Os padrões devem ser colocados entre //. Geralmente vamos utilizá-las nos métodos .replace() e .split().
+
+```js
+	// Procura: a
+	const padraoRegexp = /a/;
+
+	const texto = 'JavaScript';
+	const novoTexto = texto.replace(padraoRegexp, 'B');
+	// JBvaScript
+```
+
+<br/>
+
+## Flag: g
+
+As flags irão modificar como a expressão é interpretada. Uma das mais utilizadas é a g, que significa global, ou seja, retorne todos os resultados que estiverem dentro do padrão e não apenas o primeiro. A flag deve ser colocada no final da expressão.
+
+```js
+	// Procura: Todo a
+	const regexp = /a/g;
+
+	'JavaScript'.replace(regexp, 'i');
+	// JiviScript
+
+```
+
+<br/>
+
+## Flag: i
+
+Com o i informamos que devem ser ignoradas as diferenças entre maiúsculas e minúsculas. Isso significa que /a/ irá buscar por a e A.
+
+```js
+	// Procura: Todo PE, Pe, pE e pe
+	const regexp = /Pe/gi;
+
+	'Perdeu perdido'.replace(regexp, 'Ba');
+	// Bardeu Bardido
+```
+
+<br/>
+
+## Negar
+
+Utilizando o acento circunflexo podemos negar caracteres. Ou seja, pegue tudo que não seja [^a]
+
+```js
+	// Procura: tudo que não estiver entre a e z
+	const regexp = /[^a-z]/g;
+
+	'Brasil é com z: Brazil'.replace(regexp, ' ');
+	// rasil   com z   razil 
+```
+
+<br/>
+
+## Escapar Especiais
+
+Caracteres especiais como o ponto ., podem ser escapados utilizando a barra \, assim este não terá mais a sua função especial e será tratado como literal. Lista de caracteres especiais: +*?^$\.[]{}()|/
+
+```js
+	// Procura: todos os pontos
+	const regexp = /\./g;
+	const regexpAlternativa = /[.]/g;
+
+	'999.222.222.11'.replace(regexp, '-');
+	// 999-222-222-11
+```
+
+<br/>
+
+## Word
+
+O \w irá selecionar qualquer caracter alfanumérico e o underline. É a mesma coisa que [A-Za-z0-9_].
+
+```js
+	// Procura: todos os alfanuméricos
+	const regexp = /\w/g;
+
+	'Guarda-chuva R$ 23,00.'.replace(regexp, '-');
+	// ------------ -$ --,--.
+```
+
+<br/>
+
+## Digit
+
+O \d irá selecionar qualquer dígito. É a mesma coisa que [0-9].
+
+
+```js
+	// Procura: todos os dígitos
+	const regexp = /\d/g;
+
+	'+55 (21) 2222-2222'.replace(regexp, 'X');
+	// +XX (XX) XXXX-XXXX.
+```
+
+<br/>
+
+## Mais +
+
+O sinal de + significa que devemos selecionar quando existir pelo menos uma ou mais ocorrências.
+
+```js
+	// Procura: dígitos em ocorrência de um ou mais
+	const regexp = /\d+/g;
+
+	'222.333.222.42'.replace(regexp, 'X');
+	// X.X.X.X
+
+	// Procura: Começa com d, seguido por uma ou mais letras.
+	const regexpLetras = /d\w+/g;
+
+	'Dígitos, dados, desenhos, Dito, d'.replace(regexpLetras, 'X');
+	// Dígitos, X, X, Dito, d
+```
+
+<br/>
+
+## Asterisco *
+
+O sinal * significa que devemos selecionar quando existir 0 ou mais ocorrências.
+
+```js
+	// Procura: Começa com d, seguido por zero ou mais letras.
+	const regexp = /d\w*/g;
+
+	'Dígitos, dados, desenhos, Dito, d'.replace(regexp, 'X');
+	// Dígitos, X, X, Dito, X
+```
+
+<br/>
+
+## Opcional ?
+
+O sinal ? significa que o caracter é opcional, pode ou não existir.
+
+```js
+	// Procura: Por regex com p opcional
+	const regexp = /regexp?/g;
+
+	'Qual é o certo, regexp ou regex?'.replace(regexp, 'Regular Expression');
+	// Qual é o certo, Regular Expression ou Regular Expression?
+```
+
+<br/>
+
+## Alternado |
+
+O sinal | irá selecionar um ou outro. java|php
+
+```js
+	// Procura: java ou php (case insensitive)
+	const regexp = /java|php/gi;
+
+	'PHP e Java são linguagens diferentes'.replace(regexp, 'X');
+	// X e X são linguagens diferente
+```
+
+<br/>
+
+## Anchor Beginning
+
+Com o ^ é possível informar que a busca deve ser iniciada no início da linha.
+
+```js
+	// Procura: sequência de alfanuméricos
+	// no início da linha.
+	const regexp = /^\w+/g;
+
+	`andre@origamid.com
+	contato@origamid.com`.replace(regexp, 'X');
+	// X@origamid.com
+	// contato@origamid.com
+```
+
+<br/>
+
+## Referência da Seleção
+
+É possível utilizarmos o $& durante o momento da substituição para fazermos uma referência à seleção.
+
+```js
+	// Procura: Java
+	const regexp = /Java/g;
+
+	'PHP e Java são linguagens diferentes'.replace(regexp, '--$&Script');
+	// PHP e --JavaScript são linguagens diferentes
+	// $& será igual à Java
+```
+
+<br/>
+
+## Grupo de Captura
+
+É possível definirmos diferentes grupos de captura, que poderão ser referenciados durante a substituição. Basta envolvermos um grupo entre () parênteses. A referência se cada grupo será feita com $n, sendo o primeiro $1.
+
+```js
+	// Procura: sequência alfanumérica, seguida
+	// de , seguido espaço de sequência alfanumérica.
+	const regexp = /(\w+),\s(\w+)/g;
+
+	'Rafael, Andre'.replace(regexp, '$2 $1');
+	// Andre Rafael
+```
+
+<br/>
+
+## Regexp Constructor
+
+Toda regexp é criada com o constructor RegExp() e herda as suas propriedades e métodos. Existem diferenças na sintaxe de uma Regexp criada diretamente em uma variável e de uma passada como argumento de RegExp.
+
+```js
+	const regexp = /\w+/gi;
+
+	// Se passarmos uma string, não precisamos dos //
+	// e devemos utilizar \\ para meta characters, pois é necessário
+	// escapar a \ especial. As Flags são o segundo argumento
+	const regexpObj1 = new RegExp('\\w+', 'gi');
+	const regexpObj2 = new RegExp(/\w+/, 'gi');
+
+	'JavaScript Linguagem 101'.replace(regexpObj1, 'X');
+	// X X X
+
+	// Exemplo complexo:
+	const regexpTELEFONE1 = /(?:\+?55\s?)?(?:\(?\d{2}\)?[-\s]?)?\d{4,5}[-\s]?\d{4}/g;
+	const regexpTELEFONE2 = new RegExp('(?:\\+?55\\s?)?(?:\\(?\\d{2}\\)?[-\\s]?)?\\d{4,5}[-\\s]?\\d{4}', 'g');
+```
+
+<br/>
+
+## regexp.test()
+
+O método test() verifica se existe ou não uma ocorrência da busca. Se existir ele retorna true. A próxima vez que chamarmos o mesmo, ele irá começar do index em que parou no último true.
+
+```js
+	const regexp = /Java/g;
+	const frase = 'JavaScript e Java';
+
+	regexp.lastIndex; // 0
+	regexp.test(frase); // true
+	regexp.lastIndex; // 4
+	regexp.test(frase); // true
+	regexp.lastIndex; // 17
+	regexp.test(frase); // false
+	regexp.lastIndex; // 0
+	regexp.test(frase); // true (Reinicia
+	regexp.lastIndex;  // 4
+```
+
+<br/>
+
+## regexp.exec()
+
+O exec() diferente do test(), irá retornar uma Array com mais informações do que apenas um valor booleano.
+
+```js
+	const regexp = /\w{2,}/g;
+	const frase = 'JavaScript, TypeScript e CoffeeScript';
+
+	regexp.exec(frase);
+	// ["JavaScript", index: 0, input: "JavaScript,
+	// TypeScript e CoffeeScript", groups: undefined] 
+	regexp.exec(frase);
+	// ["TypeScript", index: 12, input: "JavaScript,
+	// TypeScript e CoffeeScript", groups: undefined] 
+	regexp.exec(frase);
+	// ["CoffeeScript", index: 25, input: "JavaScript,
+	// TypeScript e CoffeeScript", groups: undefined] 
+	regexp.exec(frase);
+	// null
+	regexp.exec(frase); // Reinicia
+	// ["JavaScript", index: 0, input: "JavaScript,
+	// TypeScript e CoffeeScript", groups: undefined] 
+```
+
+<br/>
+<br/>
+
+> 
+
+<br/>
+
+## 
