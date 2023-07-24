@@ -15,7 +15,7 @@ module.exports = {
                 use : {
                     loader: 'babel-loader',
                     options : {
-                        prests: ['@babel/preset-env'],
+                        presets: ['@babel/preset-env'],
                         plugins: ['@babel/plugin-transform-runtime'],
                     }
                 }
